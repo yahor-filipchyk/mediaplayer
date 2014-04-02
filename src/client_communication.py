@@ -1,3 +1,5 @@
+import os
+import mimetypes as mime
 
 BUF_SIZE = 4096
 FIRST_ROW_POS = 0
@@ -11,6 +13,8 @@ RESOURCE = "resource"
 PROTOCOL = "protocol"
 HEADERS = "headers"
 CONTENTS = "contents"
+
+STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
 
 import request_processors as rp
 
@@ -32,12 +36,37 @@ class ServerThread(object):
         request = self.get_request(request_data)
         print(request)
         processor = self.resolve_request_processor(request)
+        response = None
         if processor == None:
-            return
-        response = processor(request)
+            response = self.get_file(request[RESOURCE])
+        else:
+            response = processor(request)
         self.send_response(response)
-#         self.socket.send(b"Request processed")
-#         self.socket.close()
+        
+    def get_file(self, resource):
+        response = {
+        "headers": "HTTP/1.1 200 OK\r\ncontent-type: text/html; charset=UTF-8\r\n\r\n",
+        "contents": """
+<html>
+<head>
+    <title>Test page</title>
+</head>
+<body>
+    <h1>Getting a file</h1>
+</body>
+</html>     
+""",
+        }
+        file_name = os.path.join(STATIC_PATH, resource)
+        mime_type = mime.guess_type(file_name)        
+        if (os.path.isfile(file_name)):
+            file = open(file_name, "r")
+            response[CONTENTS] = file.readall()
+            file.close()
+        else:
+            response[CONTENTS] = ""
+        print(mime_type)
+        return response
         
     def resolve_request_processor(self, request):
         resource = request[RESOURCE]

@@ -3,7 +3,7 @@ import socket
 from client_communication import ServerThread
 
 HOST = "localhost"
-PORT = 80
+PORT = 8080
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))

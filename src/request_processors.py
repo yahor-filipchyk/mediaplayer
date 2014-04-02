@@ -16,6 +16,8 @@ def get_index(request):
     }
     return response
 
+# predefined request processors
+# TODO: add dynamic processors finding
 processors = {
     "/": get_index,
 }
