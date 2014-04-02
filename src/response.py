@@ -16,12 +16,16 @@ class response(object):
         }
         self.contents = None
         self.parameters = {}
+        self.attributes = {}
 
     def add_header(self, name, value):
         self.headers[name] = value
         
     def set_contents(self, contents):
         self.contents = contents
+        
+    def add_attribute(self, name, value):
+        self.attributes[name] = value
         
     def get_response(self):
         pass
