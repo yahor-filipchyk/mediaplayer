@@ -1,9 +1,10 @@
+from http_response import http_response
 
 
 def get_index(request):
-    response = {
-        "headers": "HTTP/1.1 200 OK\r\ncontent-type: text/html; charset=UTF-8\r\n\r\n",
-        "contents": """
+    response = http_response()
+    response.set_header("Connection", "close")
+    response.set_contents("""
 <html>
 <head>
     <title>Test page</title>
@@ -12,8 +13,7 @@ def get_index(request):
     <h1>Request is processed</h1>
 </body>
 </html>     
-""",
-    }
+""")
     return response
 
 # predefined request processors

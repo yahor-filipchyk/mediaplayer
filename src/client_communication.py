@@ -1,5 +1,6 @@
 import os
 import mimetypes as mime
+from http_response import http_response
 
 BUF_SIZE = 4096
 FIRST_ROW_POS = 0
@@ -34,7 +35,7 @@ class ServerThread(object):
             if len(data) < BUF_SIZE:
                 break
         request = self.get_request(request_data)
-        print(request)
+        #print(request)
         processor = self.resolve_request_processor(request)
         response = None
         if processor == None:
@@ -44,9 +45,9 @@ class ServerThread(object):
         self.send_response(response)
         
     def get_file(self, resource):
-        response = {
-        "headers": "HTTP/1.1 200 OK\r\ncontent-type: text/html; charset=UTF-8\r\n\r\n",
-        "contents": """
+        response = http_response()
+        response.set_header("Connection", "close")
+        response.set_contents("""
 <html>
 <head>
     <title>Test page</title>
@@ -55,17 +56,15 @@ class ServerThread(object):
     <h1>Getting a file</h1>
 </body>
 </html>     
-""",
-        }
+""")
         file_name = os.path.join(STATIC_PATH, resource)
         mime_type = mime.guess_type(file_name)        
         if (os.path.isfile(file_name)):
             file = open(file_name, "r")
-            response[CONTENTS] = file.readall()
+            response.set_contents(file.readall())
+            response.set_header("Content-Type", mime_type[0])
             file.close()
-        else:
-            response[CONTENTS] = ""
-        print(mime_type)
+        #print(mime_type)
         return response
         
     def resolve_request_processor(self, request):
@@ -77,11 +76,14 @@ class ServerThread(object):
             return None
         
     def send_response(self, response):
-        self.socket.send(bytearray(response[HEADERS], "utf-8"))
-        self.socket.send(bytearray(response[CONTENTS], "utf-8"))
+        print("RESPONSE:")
+        print(response.get_response())
+        self.socket.send(response.get_response())
         self.socket.close()
         
     def get_request(self, request_plain):
+        print("REQUEST:")
+        print(request_plain)
         request = {}
         parts = request_plain.split("\r\n")
         # splitting first row

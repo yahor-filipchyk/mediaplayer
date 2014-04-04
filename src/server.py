@@ -2,7 +2,7 @@
 import socket
 from client_communication import ServerThread
 
-HOST = "localhost"
+HOST = "192.168.1.6"
 PORT = 8080
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
