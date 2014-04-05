@@ -1,6 +1,7 @@
 
 from string import Template
 
+RESPONSE_ENCODING = "utf-8"
 HTTP_CODE = "HTTP_CODE"
 RESPONSE_STATUS = "RESPONSE_STATUS"
 FIRST_ROW = "HTTP/1.1 ${HTTP_CODE} ${RESPONSE_STATUS}"
@@ -62,12 +63,12 @@ class http_response(object):
             self.apply_attributes()
         self.set_header("Content-Length", len(self.contents))
         response_status = Template(FIRST_ROW).substitute(HTTP_CODE=self.http_code, RESPONSE_STATUS=self.response_status)
-        response = bytearray(response_status + RETURN)
+        response = bytearray(response_status + RETURN, RESPONSE_ENCODING)
         for header_name in self.headers:
-            response.extend(header_name + ": " + str(self.headers[header_name]) + RETURN)
+            response.extend(bytearray(header_name + ": " + str(self.headers[header_name]) + RETURN, RESPONSE_ENCODING))
         # add return to separate headers from contents
-        response.extend(RETURN)
-        response.extend(self.contents)
+        response.extend(bytearray(RETURN, RESPONSE_ENCODING))
+        response.extend(bytearray(self.contents, RESPONSE_ENCODING) if type(self.contents) is str else self.contents)
         self.cached_response = response
         return response
 
