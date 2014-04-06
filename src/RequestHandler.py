@@ -26,34 +26,23 @@ class RequestHandler(object):
             request_data += data.decode("utf-8")
             if len(data) < BUF_SIZE:
                 break
+
         request = HttpRequest(request_data)
         processor = rp.get_processor(request)
         if processor is None:
             response = HttpServlet().get_file(request)
         else:
-            # check if static file is requested
-            if request.get_header("Referer") is not None:
-                response = processor.get_file(request)
-            else :
-                response = processor.service(request)
+            try:
+                # check if static file is requested
+                if request.get_header("Referer") is not None:
+                    response = processor.get_file(request)
+                else :
+                    response = processor.service(request)
+            except Exception as ex:
+                print("An exception inside the app occurred: {0}".format(ex))
+                # add different http errors handling. if it will be needed ;)
+                request = HttpServlet().service(request)
         self.send_response(response)
-        
-    @staticmethod
-    def get_file(request):
-        resource = request.get_requested_page()
-        response = HttpResponse()
-        response.set_header("Connection", "close")
-        file_name = os.path.join(os.path.dirname(STATIC_PATH), resource[1:] if resource.startswith("/") else resource)
-        mime_type = mime.guess_type(file_name)        
-        if os.path.isfile(file_name):
-            file = open(file_name, "rb")
-            file_contents = bytearray(file.read())
-            response.set_contents(file_contents)
-            response.set_header("Content-Type", mime_type[0])
-            file.close()
-        else:
-            return HttpServlet().service(request)
-        return response
         
     def send_response(self, response):
         self.socket.send(response.get_response())
