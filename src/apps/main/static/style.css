@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-left: 15%;
+    margin-right: 15%;
+    color: #555;
+}
+
+div {
+    margin-left: 15%;
+    margin-right: 15%;
+    font-size: 18px;
+    color: #444;
+}
+
+a {
+    text-decoration: none;
+    color: #CF4F1D;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #D67149;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page not found</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #fff;
+        }
+        h1 {
+            margin-left: 15%;
+            margin-right: 15%
+        }
+        .error-code {
+            color: #8A5556;
+        }
+        .status {
+            color: #555;
+        }
+        .error-message {
+            margin-left: 15%%;
+            margin-right: 15%;
+            font-size: 22px;
+            color: #444;
+        }
+        .page {
+            color: #85212B;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<h1><span class="error-code">${error_code}</span><br>
+    <span class="status">${status}</span>
+</h1>
+<div class="error-message">
+    ${message}
+</div>
+</body>
+</html>

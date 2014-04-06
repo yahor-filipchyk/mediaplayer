@@ -8,21 +8,28 @@ APPS_ABSOLUTE_PATH = os.path.join(os.path.dirname(__file__), APPS_RELATIVE_PATH)
 """
 Predefined request processors.
 format:
-url_path: [app_dir, module_name, function]
+url_path: [app_dir, servlet_class_name]
 app_dir - directory in apps folder where the module to handle the request is stored.
-function - the function to be executed to handle client request. Takes the http_request object
-and returns the http_response object.
 """
 PROCESSORS = {
-    "/": ["", "main_page", "handle_request"],
-    "/main*": ["main", "main_page", "handle_request"],
+    "/": ["main", "MainServlet"],
+    "/main": ["main", "MainServlet"],
 }
 
-def get_processor(requested_page):
+def get_processor(request):
+    requested_page = request.get_requested_page()
+    if request.get_header("Referer") is not None:
+        host = request.get_header("Host")
+        referer = request.get_header("Referer")[len("http://" + host):]
     for app in PROCESSORS:
-        if (app.endswith("*") and requested_page.startswith(app[:-1])) or app == requested_page:
+        processor_exists = app.endswith("*") and requested_page.startswith(app[:-1]) \
+            or app == requested_page \
+            or app + "/" == requested_page
+        if "referer" in locals():
+            processor_exists = processor_exists or app == referer or app + "/" == referer
+        if processor_exists:
             module_name = PROCESSORS[app][1]
-            function_name = PROCESSORS[app][2]
+            class_name = module_name
             module_dir = os.path.join(APPS_ABSOLUTE_PATH, PROCESSORS[app][0])
             path_to_module = os.path.join(module_dir, module_name + ".py")
             try:
@@ -32,7 +39,7 @@ def get_processor(requested_page):
                 print("Cannot find module [{0}]".format(module_name))
                 break
             try:
-                processor = getattr(module, function_name)
+                processor = getattr(module, class_name)()
             except AttributeError:
                 print("Cannot find processor in module [{0}]".format(module_name))
                 break

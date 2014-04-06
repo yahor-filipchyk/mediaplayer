@@ -7,7 +7,7 @@ RESPONSE_STATUS = "RESPONSE_STATUS"
 FIRST_ROW = "HTTP/1.1 ${HTTP_CODE} ${RESPONSE_STATUS}"
 RETURN = "\r\n"
 
-class http_response(object):
+class HttpResponse(object):
     """An object representation of HTTP response.
     Contains HTTP response headers and HTTP response body.
     Provides full response in form of byte array that can be directly sent to client side.
@@ -18,6 +18,7 @@ class http_response(object):
         self.headers = {
             "Content-Type": "text/html; charset=UTF-8",
             "Server": "Simple python server",
+            "Connection": "close"
         }
         self.contents = []
         self.parameters = {}
@@ -56,7 +57,7 @@ class http_response(object):
         
     def get_response(self):
         """Converts whole response to byte array."""
-        if self.cached_response != None:
+        if self.cached_response is not None:
             return self.cached_response
         # if response body is represented by text replace attributes in text by their values
         if type(self.contents) is str:

@@ -10,7 +10,7 @@ RESOURCE = "resource"
 PROTOCOL = "protocol"
 HEADERS = "headers"
 
-class http_request(object):
+class HttpRequest(object):
     """An object representation of HTTP request.
     Gets plain HTTP request, parses it and stores request method,
     requested page, request parameters and headers.
@@ -20,7 +20,7 @@ class http_request(object):
         self.request = {}
         self.requested_page = None
         self.query_params = {}
-        if request_plain != None:
+        if request_plain is not None:
             self.parse_plain_request(request_plain)
 
     def parse_plain_request(self, request_plain):
@@ -53,7 +53,8 @@ class http_request(object):
     def get_requested_resource(self):
         return self.request[RESOURCE]
 
-    def extract_requested_page(self, requested_resource):
+    @staticmethod
+    def extract_requested_page(requested_resource):
         return requested_resource.split("?")[0]
 
     def get_requested_page(self):
@@ -69,7 +70,7 @@ class http_request(object):
         for query_part in query_parts:
             params = query_part.split("=")
             if len(params) == 2:
-                self.querry_params[params[0]] = params[1]
+                self.query_params[params[0]] = params[1]
 
     def get_request_params(self):
         return self.query_params

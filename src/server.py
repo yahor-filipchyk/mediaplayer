@@ -1,16 +1,16 @@
 
 import sys
 import socket
-from request_handler import request_handler
+from RequestHandler import RequestHandler
 
 # default hostname and port
 HOST = "localhost"
 PORT = 8080
 
 def start_server(host=None, port=None):
-    if host == None:
+    if host is None:
         host = HOST
-    if port == None:
+    if port is None:
         port = PORT
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -23,7 +23,7 @@ def start_server(host=None, port=None):
     server.listen(5)
     while True:
         conn, addr = server.accept()
-        client_connection = request_handler(addr, conn)
+        client_connection = RequestHandler(addr, conn)
         client_connection.process_request()
 
 if __name__ == "__main__":
