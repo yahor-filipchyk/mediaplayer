@@ -12,9 +12,16 @@ url_path: [app_dir, servlet_class_name]
 app_dir - directory in apps folder where the module to handle the request is stored.
 """
 PROCESSORS = {
-    "/": ["main", "MainServlet"],
+    "/": ["mediaplayer", "MediaPlayer"],
+    "/music": ["mediaplayer", "MusicPlayer"],
+    "/music/play": ["mediaplayer", "PlayMusicHandler"],
+    "/music/pause": ["mediaplayer", "PauseMusicHandler"],
+    "/music/volume": ["mediaplayer", "VolumeHandler"],
     "/main": ["main", "MainServlet"],
 }
+
+CONTEXT = {}
+
 
 def get_processor(request):
     requested_page = request.get_requested_page()
@@ -39,7 +46,7 @@ def get_processor(request):
                 print("Cannot find module [{0}]".format(module_name))
                 break
             try:
-                processor = getattr(module, class_name)()
+                processor = getattr(module, class_name)(CONTEXT)
             except AttributeError:
                 print("Cannot find processor in module [{0}]".format(module_name))
                 break

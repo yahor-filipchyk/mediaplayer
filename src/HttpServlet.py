@@ -3,9 +3,11 @@ import utils
 import os
 import mimetypes as mime
 
+
 class HttpServlet(object):
 
-    def __init__(self):
+    def __init__(self, context):
+        self.server_context = context
         self.templates_dir = utils.TEMPLATES_FOLDER
         self.static_files_dir = os.path.join(os.path.dirname(__file__), "static/")
 
@@ -23,9 +25,8 @@ class HttpServlet(object):
         response.set_response_status("Not found")
         response.set_attribute("error_code", response.http_code)
         response.set_attribute("status", response.response_status)
-        response.set_attribute("message",
-            "Requested page <span class=\"page\">{0}</span> was not found."
-            .format(request.get_header("Host") + request.get_requested_resource()))
+        response.set_attribute("message", "Requested page <span class=\"page\">{0}</span> was not found."
+                               .format(request.get_header("Host") + request.get_requested_resource()))
         response.set_contents(utils.load_template("error_page.html"))
         return response
 

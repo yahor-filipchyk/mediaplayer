@@ -30,20 +30,20 @@ class RequestHandler(object):
         request = HttpRequest(request_data)
         processor = rp.get_processor(request)
         if processor is None:
-            response = HttpServlet().get_file(request)
+            response = HttpServlet(rp.CONTEXT).get_file(request)
         else:
-            try:
-                # check if static file is requested
-                if request.get_header("Referer") is not None:
-                    response = processor.get_file(request)
-                else :
-                    response = processor.service(request)
-            except Exception as ex:
-                print("An exception inside the app occurred: {0}".format(ex))
+            # try:
+            # check if static file is requested
+            if request.get_header("Referer") is not None:
+                response = processor.get_file(request)
+            else :
+                response = processor.service(request)
+            # except Exception as ex:
+            #     print("An exception inside the app occurred: {0}".format(ex))
                 # add different http errors handling. if it will be needed ;)
-                request = HttpServlet().service(request)
+                # response = HttpServlet().service(request)
         self.send_response(response)
         
     def send_response(self, response):
-        self.socket.send(response.get_response())
+        self.socket.sendall(response.get_response())
         self.socket.close()

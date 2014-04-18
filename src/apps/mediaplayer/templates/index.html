@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Media player home page</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .now-playing {
+            position: relative;
+            margin: auto;
+            margin-top: 1%;
+            width: 98%;
+            height: 600px;
+            background: #aaa;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10%;
+            text-align: center;
+        }
+
+        .control {
+            margin-left: 5px;
+            margin-right: 5px;
+            background: #ccc;
+            width: 130px;
+            height: 130px;
+            border: solid 1px #222;
+            float: left;
+        }
+
+        .control:hover {
+            background: #bbb;
+        }
+
+        .control span {
+            font-size: 24px;
+            display: block;
+            margin-top: 46px;
+        }
+
+        .btn {
+            margin: auto;
+            margin-top: 1%;
+            padding-top: 35px;
+            width: 98%;
+            height: 110px;
+            background: #6666ff;
+            font-size: 50px;
+            color: #333;
+        }
+
+        .btn:hover {
+            background: #4444ff;
+        }
+
+        .files {
+            text-align: left;
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+
+        .files div {
+            height: 90px;
+            font-size: 38px;
+            margin-top: 3px;
+            padding-top: 25px;
+            padding-left: 1%;
+            background: #ccc;
+        }
+    </style>
+    <script>
+        function init() {
+            var wrapperWidth = document.getElementById("playing").offsetWidth;
+            var fromCenter = (130 * 3 + 25) / 2;
+            var offset = wrapperWidth / 2 - fromCenter;
+            document.getElementById("controls").setAttribute("style", "left: " + offset + "px;");
+        }
+
+        function playTrack(track) {
+            console.log(track)
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("current-file").innerHTML=track;
+                }
+            }
+            xmlhttp.open("GET", "music/play?file=" + track, true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+<body onload="init()" onresize="init()">
+    <div class="now-playing" id="playing"><span id="current-file">${now_playing}</span>
+        <div class="controls" id="controls">
+            <div class="control"><span>&lt;</span></div>
+            <div class="control"><span>| &gt; / ||</span></div>
+            <div class="control"><span>&gt;</span></div>
+        </div>
+    </div>
+    <div class="btn">Music</div>
+    <div class="btn">Video</div>
+    <div class="files">
+        ${files}
+    </div>
+</body>
+</html>
