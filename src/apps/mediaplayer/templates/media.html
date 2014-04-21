@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Media player home page</title>
+    <title>${title}</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
     <script src="scripts/script.js"></script>
@@ -16,7 +16,9 @@
             <div class="control" onclick="volumeUp()"><span>+</span></div>
         </div>
     </div>
-    <a href="music"><div class="btn">Music</div></a>
-    <a href="video"><div class="btn">Video</div></a>
+    <a href="/"><div class="btn">Home</div></a>
+    <div class="files">
+        ${files}
+    </div>
 </body>
 </html>

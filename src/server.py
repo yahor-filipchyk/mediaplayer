@@ -7,6 +7,7 @@ from RequestHandler import RequestHandler
 HOST = "localhost"
 PORT = 8080
 
+
 def start_server(host=None, port=None):
     if host is None:
         host = HOST
@@ -21,10 +22,14 @@ def start_server(host=None, port=None):
         return
     print("Server is started on host [{0}] and binded to port [{1}].".format(host, port))
     server.listen(5)
-    while True:
-        conn, addr = server.accept()
-        client_connection = RequestHandler(addr, conn)
-        client_connection.process_request()
+    try:
+        while True:
+            conn, addr = server.accept()
+            client_connection = RequestHandler(addr, conn)
+            client_connection.process_request()
+    except KeyboardInterrupt:
+        print("Server was stopped")
+        return
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:

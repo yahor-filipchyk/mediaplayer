@@ -5,16 +5,16 @@ class OSMediaPlayer(object):
     TYPE_MUSIC = "music"
     TYPE_VIDEO = "video"
 
-    def __init__(self, file_or_folder):
+    def __init__(self):
         pass
 
-    def play_file(self, file, file_type=TYPE_MUSIC):
-        pass
-
-    def play_folder(self, folder, files_type=TYPE_MUSIC):
+    def play(self, file, file_type=TYPE_MUSIC):
         pass
 
     def play_pause(self):
+        pass
+
+    def stop(self):
         pass
 
     def next(self):

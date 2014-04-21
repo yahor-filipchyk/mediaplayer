@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.now-playing {
+    position: relative;
+    margin: auto;
+    margin-top: 1%;
+    width: 98%;
+    height: 500px;
+    background: #aaa;
+}
+
+.controls {
+    position: absolute;
+    bottom: 10px;
+    left: 10%;
+    text-align: center;
+}
+
+.control {
+    margin-left: 5px;
+    margin-right: 5px;
+    background: #ccc;
+    width: 130px;
+    height: 130px;
+    border: solid 1px #222;
+    float: left;
+}
+
+.control:hover {
+    background: #bbb;
+}
+
+.control span {
+    font-size: 24px;
+    display: block;
+    margin-top: 46px;
+}
+
+.btn {
+    margin: auto;
+    margin-top: 1%;
+    padding-top: 35px;
+    width: 98%;
+    height: 110px;
+    background: #6666ff;
+    font-size: 50px;
+    color: #333;
+}
+
+.btn:hover {
+    background: #4444ff;
+}
+
+.files {
+    text-align: left;
+    margin: 1%;
+}
+
+.files div {
+    position: relative;
+    height: 90px;
+    font-size: 38px;
+    margin-top: 5px;
+    padding-top: 27px;
+    padding-left: 1%;
+    background: #ddd;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #5F7082;
+}
+
+a {
+    text-decoration: none;
+    color: #324E8F;
+}
+
+.play-btn {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    padding-top: 27px;
+    text-align: center;
+    width: 110px;
+    height: 100%;
+    background: #AEC3F5;
+    box-shadow: 0px 0px 0px 12px rgba(174, 195, 245, 0.6);
+    color: #3C4969;
+}
+
+.folder {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#current-file {
+    display: block;
+    font-size: 48px;
+    color: #333;
+    padding-top: 120px;
+}

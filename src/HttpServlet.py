@@ -1,4 +1,5 @@
 from HttpResponse import HttpResponse
+from HttpRequest import HttpRequest
 import utils
 import os
 import mimetypes as mime
@@ -33,7 +34,10 @@ class HttpServlet(object):
     def get_file(self, request):
         resource = request.get_requested_page()
         referer = request.get_header("Referer")
-        if referer is not None and referer.endswith("/"):
+        if referer is not None:
+            referer = HttpRequest.extract_requested_page(referer)
+            if not referer.endswith("/"):
+                referer += "/"
             app_referer = referer[referer[:-1].rfind("/"):-1]
             if resource.startswith(app_referer):
                 resource = resource[len(app_referer):]
