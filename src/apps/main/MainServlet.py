@@ -4,10 +4,11 @@ from HttpServlet import HttpServlet
 import os
 import utils
 
+
 class MainServlet(HttpServlet):
 
-    def __init__(self):
-        HttpServlet.__init__(self)
+    def __init__(self, context):
+        HttpServlet.__init__(self, context)
         self.set_static_files_dir(os.path.join(os.path.dirname(__file__), "static/"))
 
     def service(self, request):

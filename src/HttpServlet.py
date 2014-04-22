@@ -1,11 +1,14 @@
 from HttpResponse import HttpResponse
+from HttpRequest import HttpRequest
 import utils
 import os
 import mimetypes as mime
 
+
 class HttpServlet(object):
 
-    def __init__(self):
+    def __init__(self, context):
+        self.server_context = context
         self.templates_dir = utils.TEMPLATES_FOLDER
         self.static_files_dir = os.path.join(os.path.dirname(__file__), "static/")
 
@@ -23,16 +26,18 @@ class HttpServlet(object):
         response.set_response_status("Not found")
         response.set_attribute("error_code", response.http_code)
         response.set_attribute("status", response.response_status)
-        response.set_attribute("message",
-            "Requested page <span class=\"page\">{0}</span> was not found."
-            .format(request.get_header("Host") + request.get_requested_resource()))
+        response.set_attribute("message", "Requested page <span class=\"page\">{0}</span> was not found."
+                               .format(request.get_header("Host") + request.get_requested_resource()))
         response.set_contents(utils.load_template("error_page.html"))
         return response
 
     def get_file(self, request):
         resource = request.get_requested_page()
         referer = request.get_header("Referer")
-        if referer is not None and referer.endswith("/"):
+        if referer is not None:
+            referer = HttpRequest.extract_requested_page(referer)
+            if not referer.endswith("/"):
+                referer += "/"
             app_referer = referer[referer[:-1].rfind("/"):-1]
             if resource.startswith(app_referer):
                 resource = resource[len(app_referer):]

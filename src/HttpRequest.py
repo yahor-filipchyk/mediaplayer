@@ -10,6 +10,7 @@ RESOURCE = "resource"
 PROTOCOL = "protocol"
 HEADERS = "headers"
 
+
 class HttpRequest(object):
     """An object representation of HTTP request.
     Gets plain HTTP request, parses it and stores request method,
@@ -71,12 +72,13 @@ class HttpRequest(object):
             params = query_part.split("=")
             if len(params) == 2:
                 self.query_params[params[0]] = params[1]
+        return self.query_params
 
     def get_request_params(self):
         return self.query_params
 
     def get_request_param(self, param_name):
-        if param_name in self.query_params:
+        if param_name in self.query_params.keys():
             return self.query_params[param_name]
         return None
 

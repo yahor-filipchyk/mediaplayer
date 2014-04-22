@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${title}</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <script src="scripts/script.js"></script>
+</head>
+<body onload="init()" onresize="init()">
+    <div class="now-playing" id="playing"><span id="current-file">${now_playing}</span>
+        <div class="controls" id="controls">
+            <div class="control" style="background-image: url('prev.png');" onclick="playPrev()"></div>
+            <div class="control" style="background-image: url('next.png');" onclick="playNext()"></div>
+            <div class="control" style="background-image: url('play.png');" onclick="playPause()"></div>
+            <div class="control" style="background-image: url('vol_down.png');" onclick="volumeDown()"></div>
+            <div class="control" style="background-image: url('vol_up.png');" onclick="volumeUp()"></div>
+        </div>
+    </div>
+    <a href="/"><div class="btn">Home</div></a>
+    <div class="files">
+        ${files}
+    </div>
+</body>
+</html>
