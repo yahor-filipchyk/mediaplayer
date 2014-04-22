@@ -9,11 +9,11 @@
 <body onload="init()" onresize="init()">
     <div class="now-playing" id="playing"><span id="current-file">${now_playing}</span>
         <div class="controls" id="controls">
-            <div class="control" onclick="playPrev()"><span>&lt;</span></div>
-            <div class="control" onclick="playNext()"><span>&gt;</span></div>
-            <div class="control" onclick="playPause()"><span>| &gt; / ||</span></div>
-            <div class="control" onclick="volumeDown()"><span>-</span></div>
-            <div class="control" onclick="volumeUp()"><span>+</span></div>
+            <div class="control" style="background-image: url('prev.png');" onclick="playPrev()"></div>
+            <div class="control" style="background-image: url('next.png');" onclick="playNext()"></div>
+            <div class="control" style="background-image: url('play.png');" onclick="playPause()"></div>
+            <div class="control" style="background-image: url('vol_down.png');" onclick="volumeDown()"></div>
+            <div class="control" style="background-image: url('vol_up.png');" onclick="volumeUp()"></div>
         </div>
     </div>
     <a href="/"><div class="btn">Home</div></a>

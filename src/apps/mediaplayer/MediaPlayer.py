@@ -46,9 +46,9 @@ class MediaPlayer(HttpServlet):
         files_list = ""
         if media_dir != MEDIA_DIR and media_dir[:-1] != MEDIA_DIR:
             parent_folder = os.path.dirname(media_dir)
-            # print("PARENT: " + parent_folder)
+            print("PARENT: " + parent_folder)
             if parent_folder != MEDIA_DIR:
-                link = "{1}?folder={0}".format(parent_folder.rsplit("/", 1)[1], media_type)
+                link = "{1}?folder={0}".format(parent_folder[len(MEDIA_DIR) + 1:], media_type)
             else:
                 link = media_type
             files_list += "<div><a href=\"{0}\"><span class=\"folder\">{1}</span></a></div>\r\n"\

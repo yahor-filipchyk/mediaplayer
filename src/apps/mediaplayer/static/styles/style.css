@@ -10,7 +10,7 @@ body {
     margin-top: 1%;
     width: 98%;
     height: 500px;
-    background: #aaa;
+    background: #A7CBE8;
 }
 
 .controls {
@@ -23,36 +23,29 @@ body {
 .control {
     margin-left: 5px;
     margin-right: 5px;
-    background: #ccc;
+    background: #60A4DB;
     width: 130px;
     height: 130px;
-    border: solid 1px #222;
     float: left;
 }
 
-.control:hover {
-    background: #bbb;
-}
-
-.control span {
-    font-size: 24px;
-    display: block;
-    margin-top: 46px;
+.control:active {
+    background: #84B3D9;
 }
 
 .btn {
     margin: auto;
     margin-top: 1%;
-    padding-top: 35px;
+    padding-top: 30px;
     width: 98%;
     height: 110px;
-    background: #6666ff;
-    font-size: 50px;
-    color: #333;
+    background: #447EAD;
+    font-size: 56px;
+    color: #3e4a58;
 }
 
-.btn:hover {
-    background: #4444ff;
+.btn:active {
+    background: #78a3be;
 }
 
 .files {
@@ -67,7 +60,7 @@ body {
     margin-top: 5px;
     padding-top: 27px;
     padding-left: 1%;
-    background: #ddd;
+    background: #D5E2ED;
     color: #333;
     overflow: hidden;
     white-space: nowrap;
@@ -101,6 +94,6 @@ a {
 #current-file {
     display: block;
     font-size: 48px;
-    color: #333;
+    color: #2C4D69;
     padding-top: 120px;
 }
